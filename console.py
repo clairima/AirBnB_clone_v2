@@ -114,7 +114,8 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def validate_att_value(self, arg):
+    @staticmethod
+    def validate_att_value(arg):
         """
         Validate that a string is passed like this <key name>=<value>
         """
