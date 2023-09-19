@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ test BaseModel class"""
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 import unittest
 import datetime
 from uuid import UUID
@@ -26,6 +27,8 @@ class test_basemodel(unittest.TestCase):
             os.rename("file.json", "tempFile.json")
         except Exception:
             pass
+        FileStorage._FileStorage__objects = {}
+        cls.storage = FileStorage()
 
     @classmethod
     def tearDownClass(cls):
@@ -41,6 +44,7 @@ class test_basemodel(unittest.TestCase):
             os.rename("tempFile.json", "file.json")
         except Exception:
             pass
+        del cls.storage
 
     def test_default(self):
         """ default test"""

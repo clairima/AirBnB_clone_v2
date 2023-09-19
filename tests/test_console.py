@@ -4,6 +4,7 @@ from console import HBNBCommand
 from io import StringIO
 import models
 from models.engine.file_storage import FileStorage
+from models.engine.db_storage import DBStorage
 import os
 import unittest
 
@@ -42,6 +43,7 @@ class TestHBNBCommand(unittest.TestCase):
         """setting up test case"""
         self.HBNB = HBNBCommand()
 
+    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_create(self):
         """Test create command (basic method)"""
         with patch("sys.stdout", new=StringIO()) as f:
@@ -51,6 +53,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("all BaseModel")
             self.assertIn(bm, f.getvalue())
 
+    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_create_parameters(self):
         """Test create <name>=<value>"""
         with patch("sys.stdout", new=StringIO()) as f:
@@ -73,6 +76,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn("'price_by_night': 300", output)
             self.assertIn("'longitude': -122.431297", output)
 
+    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_all(self):
         """Test the all command"""
         with patch('sys.stdout', new=StringIO()) as f:
@@ -82,6 +86,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.HBNB.onecmd("all Review")
             self.assertEqual("[]\n", f.getvalue())
 
+    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_update(self):
         """Test the update command"""
         with patch("sys.stdout", new=StringIO()) as f:
@@ -101,6 +106,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
+    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_show(self):
         """Test the show command"""
         with patch("sys.stdout", new=StringIO()) as f:
@@ -120,6 +126,7 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertEqual(
                 "** no instance found **\n", f.getvalue())
 
+    @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_destroy(self):
         """Test the destroy command"""
         with patch("sys.stdout", new=StringIO()) as f:

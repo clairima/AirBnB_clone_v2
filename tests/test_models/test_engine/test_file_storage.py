@@ -3,6 +3,7 @@
 import unittest
 from models.base_model import BaseModel
 from models import storage
+from models.engine.file_storage import FileStorage
 import os
 
 
@@ -10,6 +11,7 @@ class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
     @classmethod
     def setUpClass(cls):
+        cls.storage = FileStorage()
         """
         rename file.json -> tempFile.json
         """
