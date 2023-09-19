@@ -72,3 +72,69 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn("'latitude': 37.773972", output)
             self.assertIn("'price_by_night': 300", output)
             self.assertIn("'longitude': -122.431297", output)
+
+    def test_all(self):
+        """Test the all command"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.HBNB.onecmd("all NotClass")
+            self.assertEqual("** class doesn't exist **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("all Review")
+            self.assertEqual("[]\n", f.getvalue())
+
+    def test_update(self):
+        """Test the update command"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("update")
+            self.assertEqual(
+                "** class name missing **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("update NotClass")
+            self.assertEqual(
+                "** class doesn't exist **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("update Review")
+            self.assertEqual(
+                "** instance id missing **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("update Review 123456789")
+            self.assertEqual(
+                "** no instance found **\n", f.getvalue())
+
+    def test_show(self):
+        """Test the show command"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("show")
+            self.assertEqual(
+                "** class name missing **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("show NotClass")
+            self.assertEqual(
+                "** class doesn't exist **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("show Review")
+            self.assertEqual(
+                "** instance id missing **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("show Review 123456789")
+            self.assertEqual(
+                "** no instance found **\n", f.getvalue())
+
+    def test_destroy(self):
+        """Test the destroy command"""
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("destroy")
+            self.assertEqual(
+                "** class name missing **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("destroy NotClass")
+            self.assertEqual(
+                "** class doesn't exist **\n", f.getvalue())
+        with patch("sys.stdout", new=StringIO()) as f:
+            self.HBNB.onecmd("destroy Review")
+            self.assertEqual(
+                "** instance id missing **\n", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.HBNB.onecmd("destroy Review 12345678")
+            self.assertEqual(
+                "** no instance found **\n", f.getvalue())
