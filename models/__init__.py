@@ -3,6 +3,8 @@
 import os
 from models.engine.file_storage import FileStorage
 
+storage_type = 'db'
+
 if storage_type == 'db':
 
     from models.engine.db_storage import DBStorage
