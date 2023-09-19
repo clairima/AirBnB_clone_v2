@@ -6,11 +6,37 @@ import models
 from models.engine.file_storage import FileStorage
 import os
 import unittest
+
 from unittest.mock import patch
 
 
 class TestHBNBCommand(unittest.TestCase):
     """Unittesting for the command interpreter"""
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        rename file.json -> tempFile.json
+        """
+        try:
+            os.rename("file.json", "tempFile.json")
+        except Exception:
+            pass
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        rename tempFile.json -> file.json
+        """
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
+
+        try:
+            os.rename("tempFile.json", "file.json")
+        except Exception:
+            pass
 
     def setUp(self):
         """setting up test case"""
