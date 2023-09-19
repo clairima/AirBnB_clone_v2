@@ -148,6 +148,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
+        args = args.replace('"', '\\"')
         line = shlex.split(args)
         if len(line) == 0:
             print("** class name missing **")
@@ -160,19 +161,29 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
         for i in range(1, len(line)):
             if (self.validate_att_value(line[i])):
+                flag_float = 0
+                flag_int = 0
                 att_value = line[i].split('=')
                 str_value = line[0] + " " + str(new_instance.id) + \
                     " " + att_value[0] + " " + att_value[1]
+                if (att_value[1][0] != '"' and '.' in att_value[1] and
+                        self.is_float(att_value[1])):
+                    flag_float = 1
+                elif (att_value[1][0] != '"' and self.is_int(att_value[1])):
+                    flag_int = 1
+                elif (att_value[1][0] != '"'):
+                    continue
                 self.do_update(str_value)
                 value = getattr(new_instance, att_value[0])
-                if (type(value) is str and '_' in value):
+                if (flag_float):
+                    value = float(value)
+                    setattr(new_instance, att_value[0], value)
+                elif (flag_int):
+                    value = int(value)
+                    setattr(new_instance, att_value[0], value)
+                elif ('_' in value):
                     new_value = value.replace('_', ' ')
                     setattr(new_instance, att_value[0], new_value)
-                elif (type(value) is str and '.' in value and
-                      self.is_float(value)):
-                    value = float(value)
-                elif (type(value) is str and self.is_int(value)):
-                    value = int(value)
         storage.save()
 
     def help_create(self):
