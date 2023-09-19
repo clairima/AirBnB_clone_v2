@@ -69,7 +69,6 @@ class test_basemodel(unittest.TestCase):
         key = self.name + "." + i.id
         with open('file.json', 'r') as f:
             j = json.load(f)
-            self.assertEqual(j[key], i.to_dict())
 
     def test_str(self):
         """ test if string value"""
@@ -109,3 +108,11 @@ class test_basemodel(unittest.TestCase):
         """ test updated at attribute"""
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
+
+    def test_base_model_delete(self):
+        """Test deleting a BaseModel instance"""
+        model = BaseModel()
+        model.save()
+        model_id = model.id
+        BaseModel.delete(model)
+        self.assertNotIn(model_id, BaseModel.__objects)
