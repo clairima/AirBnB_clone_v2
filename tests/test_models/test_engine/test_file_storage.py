@@ -8,6 +8,30 @@ import os
 
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
+    @classmethod
+    def setUpClass(cls):
+        """
+        rename file.json -> tempFile.json
+        """
+        try:
+            os.rename("file.json", "tempFile.json")
+        except Exception:
+            pass
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        rename tempFile.json -> file.json
+        """
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
+
+        try:
+            os.rename("tempFile.json", "file.json")
+        except Exception:
+            pass
 
     def setUp(self):
         """ Set up test environment """
@@ -21,7 +45,7 @@ class test_fileStorage(unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except Exception:
             pass
 
     def test_obj_list_empty(self):
