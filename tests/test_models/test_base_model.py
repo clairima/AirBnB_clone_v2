@@ -17,14 +17,28 @@ class test_basemodel(unittest.TestCase):
         self.name = 'BaseModel'
         self.value = BaseModel
 
-    def setUp(self):
-        """ Setting up the tests"""
-        pass
-
-    def tearDown(self):
-        """destructor for each test case"""
+    @classmethod
+    def setUpClass(cls):
+        """
+        rename file.json -> tempFile.json
+        """
         try:
-            os.remove('file.json')
+            os.rename("file.json", "tempFile.json")
+        except Exception:
+            pass
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        rename tempFile.json -> file.json
+        """
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
+
+        try:
+            os.rename("tempFile.json", "file.json")
         except Exception:
             pass
 
