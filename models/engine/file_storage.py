@@ -13,6 +13,9 @@ class FileStorage:
         if cls is None:
             return FileStorage.__objects
         else:
+            from models import classes
+            if type(cls) == str:
+                cls = classes.get(cls)
             filtered_objects = {}
             for key, obj in FileStorage.__objects.items():
                 if isinstance(obj, cls):

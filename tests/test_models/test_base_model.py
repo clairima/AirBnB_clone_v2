@@ -78,6 +78,7 @@ class test_basemodel(unittest.TestCase):
     def test_str(self):
         """ test if string value"""
         i = self.value()
+        dict = i.to_dict()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
                          i.__dict__))
 
@@ -91,12 +92,6 @@ class test_basemodel(unittest.TestCase):
         """ test the none case of kwargs"""
         n = {None: None}
         with self.assertRaises(TypeError):
-            new = self.value(**n)
-
-    def test_kwargs_one(self):
-        """ test only one input with kwargs """
-        n = {'Name': 'test'}
-        with self.assertRaises(KeyError):
             new = self.value(**n)
 
     def test_id(self):

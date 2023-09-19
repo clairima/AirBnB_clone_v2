@@ -167,6 +167,8 @@ class HBNBCommand(cmd.Cmd):
                 att_val = att_value[1]
                 if att_name in HBNBCommand.types:
                     att_val = HBNBCommand.types[att_name](att_val)
+                if (type(att_val) is str and '_' in att_val):
+                    att_val = att_val.replace('_', ' ')
                 setattr(new_instance, att_name, att_val)
 
         # Save the object to the database
