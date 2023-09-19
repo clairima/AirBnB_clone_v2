@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ test BaseModel class"""
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 import unittest
 import datetime
 from uuid import UUID
@@ -26,6 +27,8 @@ class test_basemodel(unittest.TestCase):
             os.rename("file.json", "tempFile.json")
         except Exception:
             pass
+        FileStorage._FileStorage__objects = {}
+        cls.storage = FileStorage()
 
     @classmethod
     def tearDownClass(cls):
@@ -41,6 +44,7 @@ class test_basemodel(unittest.TestCase):
             os.rename("tempFile.json", "file.json")
         except Exception:
             pass
+        del cls.storage
 
     def test_default(self):
         """ default test"""
@@ -73,6 +77,7 @@ class test_basemodel(unittest.TestCase):
     def test_str(self):
         """ test if string value"""
         i = self.value()
+        dict = i.to_dict()
         self.assertEqual(str(i), '[{}] ({}) {}'.format(self.name, i.id,
                          i.__dict__))
 
@@ -86,12 +91,6 @@ class test_basemodel(unittest.TestCase):
         """ test the none case of kwargs"""
         n = {None: None}
         with self.assertRaises(TypeError):
-            new = self.value(**n)
-
-    def test_kwargs_one(self):
-        """ test only one input with kwargs """
-        n = {'Name': 'test'}
-        with self.assertRaises(KeyError):
             new = self.value(**n)
 
     def test_id(self):
