@@ -16,13 +16,6 @@ class TestHBNBCommand(unittest.TestCase):
         """setting up test case"""
         self.HBNB = HBNBCommand()
 
-    def tearDown(self):
-        """ Remove storage file at end of tests """
-        try:
-            os.remove('file.json')
-        except Exception:
-            pass
-
     def test_create(self):
         """Test create command (basic method)"""
         with patch("sys.stdout", new=StringIO()) as f:
