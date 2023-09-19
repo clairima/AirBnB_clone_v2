@@ -124,6 +124,28 @@ class HBNBCommand(cmd.Cmd):
             return True
         return False
 
+    @staticmethod
+    def is_float(element: any):
+        """Check if a string is float"""
+        if element is None:
+            return False
+        try:
+            float(element)
+            return True
+        except ValueError:
+            return False
+
+    @staticmethod
+    def is_int(element: any):
+        """Check if a string is int"""
+        if element is None:
+            return False
+        try:
+            int(element)
+            return True
+        except ValueError:
+            return False
+
     def do_create(self, args):
         """ Create an object of any class"""
         line = shlex.split(args)
@@ -146,6 +168,11 @@ class HBNBCommand(cmd.Cmd):
                 if (type(value) is str and '_' in value):
                     new_value = value.replace('_', ' ')
                     setattr(new_instance, att_value[0], new_value)
+                elif (type(value) is str and '.' in value and
+                      self.is_float(value)):
+                    value = float(value)
+                elif (type(value) is str and self.is_int(value)):
+                    value = int(value)
         storage.save()
 
     def help_create(self):
