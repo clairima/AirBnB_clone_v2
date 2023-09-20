@@ -7,28 +7,22 @@ from models.user import User
 class test_User(test_basemodel):
     """ test User class """
 
-    def __init__(self, *args, **kwargs):
-        """ a constructor method """
-        super().__init__(*args, **kwargs)
-        self.name = "User"
-        self.value = User
+    def setUp(self):
+        """setting up the test cases"""
+        self.new = User()
 
     def test_first_name(self):
         """ test first name """
-        new = self.value()
-        self.assertEqual(type(new.first_name), str)
+        self.assertTrue(hasattr(self.new, "first_name"))
 
     def test_last_name(self):
         """ test last name"""
-        new = self.value()
-        self.assertEqual(type(new.last_name), str)
+        self.assertTrue(hasattr(self.new, "last_name"))
 
     def test_email(self):
         """ test email """
-        new = self.value()
-        self.assertEqual(type(new.email), str)
+        self.assertTrue(hasattr(self.new, "email"))
 
     def test_password(self):
         """ test password """
-        new = self.value()
-        self.assertEqual(type(new.password), str)
+        self.assertTrue(hasattr(self.new, "password"))

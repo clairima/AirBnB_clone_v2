@@ -50,19 +50,3 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     reviews.append(review)
             return reviews
-
-        @property
-        def amenities(self):
-            """Amenities getter"""
-            from models import storage
-            amenity_list = []
-            for amenity in list(storage.all(Amenity).values()):
-                if amenity.id in self.amenity_ids:
-                    amenity_list.append(amenity)
-            return amenity_list
-
-        @amenities.setter
-        def amenities(self, value):
-            """Amenities setter"""
-            if type(value) == Amenity:
-                self.amenity_ids.append(value.id)

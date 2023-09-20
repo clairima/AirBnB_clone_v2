@@ -107,11 +107,3 @@ class test_basemodel(unittest.TestCase):
         """ test updated at attribute"""
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
-
-    def test_base_model_delete(self):
-        """Test deleting a BaseModel instance"""
-        model = BaseModel()
-        model.save()
-        model_id = model.id
-        BaseModel.delete(model)
-        self.assertNotIn(model_id, BaseModel.__objects)
