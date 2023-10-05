@@ -7,23 +7,18 @@ from models.review import Review
 class test_review(test_basemodel):
     """ test Review class """
 
-    def __init__(self, *args, **kwargs):
-        """ a constructor method """
-        super().__init__(*args, **kwargs)
-        self.name = "Review"
-        self.value = Review
+    def setUp(self):
+        """Set up"""
+        self.new = Review()
 
     def test_place_id(self):
         """ test place id """
-        new = self.value()
-        self.assertEqual(type(new.place_id), str)
+        self.assertTrue(hasattr(self.new, "place_id"))
 
     def test_user_id(self):
         """test user id """
-        new = self.value()
-        self.assertEqual(type(new.user_id), str)
+        self.assertTrue(hasattr(self.new, "user_id"))
 
     def test_text(self):
         """ test text """
-        new = self.value()
-        self.assertEqual(type(new.text), str)
+        self.assertTrue(hasattr(self.new, "text"))

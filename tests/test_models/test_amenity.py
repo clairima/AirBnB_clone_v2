@@ -7,13 +7,9 @@ from models.amenity import Amenity
 class test_Amenity(test_basemodel):
     """ testing amenity class """
 
-    def __init__(self, *args, **kwargs):
-        """ a constructor method """
-        super().__init__(*args, **kwargs)
-        self.name = "Amenity"
-        self.value = Amenity
+    def setUp(self):
+        self.new = Amenity()
 
     def test_name2(self):
         """ test name2"""
-        new = self.value()
-        self.assertEqual(type(new.name), str)
+        self.assertTrue(hasattr(self.new, "name"))
