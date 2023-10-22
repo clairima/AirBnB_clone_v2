@@ -32,7 +32,7 @@ class DBStorage:
         objects = {}
 
         if cls:
-            if type(cls) == str:
+            if type(cls) is str:
                 cls = classes.get(cls)
             for obj in self.__session.query(cls).all():
                 key = "{}.{}".format(type(obj).__name__, obj.id)
@@ -66,6 +66,10 @@ class DBStorage:
             expire_on_commit=False
         )
         self.__session = scoped_session(session_factory)
+
+    def close(self):
+        """ calls remove() """
+        self.__session.close()
 
     @property
     def cities(self):
