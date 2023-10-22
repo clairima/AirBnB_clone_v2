@@ -16,18 +16,3 @@ class State(BaseModel, Base):
         back_populates="state",
         cascade="all, delete-orphan"
     )
-
-    @property
-    def cities(self):
-        ver = models.storage.all()
-        list1 = []
-        result = []
-        for key in ver:
-            city = key.replace('.', ' ')
-            city = shlex.split(city)
-            if (city[0] == 'City'):
-                list1.append(ver[key])
-        for element in list1:
-            if (element.state_id == self.id):
-                result.append(element)
-        return (result)
